@@ -1,0 +1,270 @@
+--// Variables
+local Camera = workspace.CurrentCamera
+local Lplr = game.Players.LocalPlayer
+local Dist = math.huge
+local Clicks = {1, 1, 1}
+
+--// GUI
+local AimbotGui = Instance.new("ScreenGui")
+AimbotGui.Name = "AimbotGui"
+AimbotGui.Parent = game.CoreGui
+
+local MainGui = Instance.new("Frame")
+MainGui.Name = "MainGui"
+MainGui.Parent = AimbotGui
+MainGui.Position = UDim2.new(0.311, 0, 0.267, 0)
+MainGui.Size = UDim2.new(0.378, 0, 0.463, 0)
+MainGui.BackgroundColor3 = Color3.fromRGB(53, 53, 53)
+
+local Buttons = Instance.new("Folder")
+Buttons.Name = "Buttons"
+Buttons.Parent = MainGui
+
+local Stroke = Instance.new("Folder")
+Stroke.Name = "Stroke"
+Stroke.Parent = MainGui
+
+local Template = Instance.new("Frame")
+Template.Name = "PlayerFrame"
+Template.BackgroundColor3 = Color3.fromRGB(46, 46, 46)
+Template.Parent = game.ReplicatedStorage
+
+local Name = Instance.new("TextButton")
+Name.Name = "Name"
+Name.BackgroundTransparency = 1
+Name.FontFace = Font.new("rbxassetid://12187364648")
+Name.Text = "@username"
+Name.TextScaled = true
+Name.TextStrokeColor3 = Color3.fromRGB(53, 53, 53)
+Name.TextColor3 = Color3.fromRGB(122, 122, 122)
+Name.TextStrokeTransparency = 0
+Name.Parent = Template
+
+local PlayerScroller = Instance.new("ScrollingFrame")
+PlayerScroller.Name = "PlayerScroller"
+PlayerScroller.ScrollBarThickness = 12
+PlayerScroller.BackgroundTransparency = 1
+PlayerScroller.ScrollBarImageColor3 = Color3.fromRGB(46, 46, 46)
+PlayerScroller.Parent = MainGui
+
+local UIListLayout = Instance.new("UIListLayout")
+UIListLayout.Padding = UDim.new(0.05, 1)
+UIListLayout.Parent = PlayerScroller
+
+local Auto = Instance.new("TextButton")
+Auto.Name = "Auto"
+Auto.BackgroundColor3 = Color3.fromRGB(46, 46, 46)
+Auto.Position = UDim2.new(0.066, 0, 0.487, 0)
+Auto.Size = UDim2.new(0.263, 0, 0.164, 0)
+Auto.FontFace = Font.new("rbxassetid://12187364648")
+Auto.Text = "auto"
+Auto.TextColor3 = Color3.fromRGB(122, 122, 122)
+Auto.TextScaled = true
+Auto.TextStrokeColor3 = Color3.fromRGB(53, 53, 53)
+Auto.TextStrokeTransparency = 0
+Auto.ZIndex = 3
+Auto.Parent = Buttons
+
+local ESP = Instance.new("TextButton")
+ESP.Name = "ESP"
+ESP.BackgroundColor3 = Color3.fromRGB(46, 46, 46)
+ESP.Position = UDim2.new(0.066, 0, 0.244, 0)
+ESP.Size = UDim2.new(0.263, 0, 0.164, 0)
+ESP.FontFace = Font.new("rbxassetid://12187364648")
+ESP.Text = "esp"
+ESP.TextColor3 = Color3.fromRGB(122, 122, 122)
+ESP.TextScaled = true
+ESP.TextStrokeColor3 = Color3.fromRGB(53, 53, 53)
+ESP.TextStrokeTransparency = 0
+ESP.ZIndex = 3
+ESP.Parent = Buttons
+
+local Target = Instance.new("TextButton")
+Target.Name = "Target"
+Target.BackgroundColor3 = Color3.fromRGB(46, 46, 46)
+Target.Position = UDim2.new(0.066, 0, 0.72, 0)
+Target.Size = UDim2.new(0.263, 0, 0.164, 0)
+Target.FontFace = Font.new("rbxassetid://12187364648")
+Target.Text = "target"
+Target.TextColor3 = Color3.fromRGB(122, 122, 122)
+Target.TextScaled = true
+Target.TextStrokeColor3 = Color3.fromRGB(53, 53, 53)
+Target.TextStrokeTransparency = 0
+Target.ZIndex = 3
+Target.Parent = Buttons
+
+local A = Instance.new("UICorner")
+A.CornerRadius = UDim.new(0, 15)
+A.Parent = Target
+
+local UpperGui = Instance.new("Frame")
+UpperGui.Name = "UpperGui"
+UpperGui.Parent = AimbotGui
+UpperGui.ZIndex = 2
+UpperGui.Position = UDim2.new(0.311, 0, 0.267, 0)
+UpperGui.Size = UDim2.new(0.378, 0, 0.084, 0)
+UpperGui.BackgroundColor3 = Color3.fromRGB(46, 46, 46)
+
+local Close = Instance.new("TextLabel")
+Close.FontFace = Font.new("rbxasset://fonts/families/FredokaOne.json")
+Close.Text = "x"
+Close.BackgroundTransparency = 1
+Close.TextScaled = true
+Close.ZIndex = 3
+Close.TextColor3 = Color3.fromRGB(122, 122, 122)
+Close.TextStrokeTransparency = 0
+Close.TextStrokeColor3 = Color3.fromRGB(53, 53, 53)
+Close.Position = UDim2.new(0.847, 0, 0.12, 0)
+Close.Size = UDim2.new(0.171, 0, 0.76, 0)
+Close.Name = "Close"
+Close.Parent = UpperGui
+
+local S1 = Instance.new("Frame")
+S1.Name = "S1"
+S1.BackgroundColor3 = Color3.fromRGB(46, 46, 46)
+S1.Position = UDim2.new(0.961, 0, 0.138, 0)
+S1.Size = UDim2.new(0.039, 0, 0.862, 0)
+S1.Parent = Stroke
+
+local S2 = Instance.new("Frame")
+S2.Name = "S2"
+S2.BackgroundColor3 = Color3.fromRGB(46, 46, 46)
+S2.Position = UDim2.new(0.482, 0, 0.298, 0)
+S2.Size = UDim2.new(0.042, 0, 1.349, 0)
+S2.Rotation = 90
+S2.Parent = Stroke
+
+local S3 = Instance.new("Frame")
+S3.Name = "S3"
+S3.BackgroundColor3 = Color3.fromRGB(46, 46, 46)
+S3.Position = UDim2.new(0.355, 0, 0.182, 0)
+S3.Size = UDim2.new(0.039, 0, 0.818, 0)
+S3.Parent = Stroke
+
+local S4 = Instance.new("Frame")
+S4.Name = "S4"
+S4.BackgroundColor3 = Color3.fromRGB(46, 46, 46)
+S4.Position = UDim2.new(0, 0, 0.138, 0)
+S4.Size = UDim2.new(0.039, 0, 0.862, 0)
+S4.Parent = Stroke
+
+local CloseBt = Instance.new("TextButton")
+CloseBt.Text = ""
+CloseBt.TextScaled = true
+CloseBt.Position = UDim2.new(0.323, 0, 0.136, 0)
+CloseBt.Size = UDim2.new(0.338, 0, 0.727, 0)
+CloseBt.BackgroundTransparency = 1
+CloseBt.Name = "CloseBt"
+CloseBt.Parent = Close
+
+local Roll = Instance.new("TextLabel")
+Roll.FontFace = Font.new("rbxasset://fonts/families/FredokaOne.json")
+Roll.TextColor3 = Color3.fromRGB(122, 122, 122)
+Roll.TextScaled = true
+Roll.TextStrokeColor3 = Color3.fromRGB(53, 53, 53)
+Roll.TextStrokeTransparency = 0
+Roll.BackgroundTransparency = 1
+Roll.ZIndex = 3
+Roll.Text = "-"
+Roll.Position = UDim2.new(0.789, 0, 0, 0)
+Roll.Size = UDim2.new(0.095, 0, 0.88, 0)
+Roll.Name = "Roll"
+Roll.Parent = UpperGui
+
+local RollBt = Instance.new("TextButton")
+RollBt.Text = ""
+RollBt.TextScaled = true
+RollBt.Position = UDim2.new(0.323, 0, 0.136, 0)
+RollBt.Size = UDim2.new(0.611, 0, 0.842, 0)
+RollBt.BackgroundTransparency = 1
+RollBt.Name = "RollBt"
+RollBt.Parent = Roll
+
+local UpperText = Instance.new("TextLabel")
+UpperText.Name = "UpperText"
+UpperText.FontFace = Font.new("rbxassetid://12187364648")
+UpperText.TextColor3 = Color3.fromRGB(122, 122, 122)
+UpperText.TextScaled = true
+UpperText.TextStrokeColor3 = Color3.fromRGB(53, 53, 53)
+UpperText.TextStrokeTransparency = 0
+UpperText.Text = "Bruh Aimbot by rinkinin2"
+UpperText.BackgroundTransparency = 1
+UpperText.ZIndex = 3
+UpperText.Position = UDim2.new(0.066, 0, 0.12, 0)
+UpperText.Size = UDim2.new(0.661, 0, 0.88, 0)
+UpperText.Parent = UpperGui
+
+local UIC1 = Instance.new("UICorner")
+UIC1.Name = "UIC1"
+UIC1.CornerRadius = UDim.new(0, 15)
+UIC1.Parent = UpperGui
+
+local UIC2 = Instance.new("UICorner")
+UIC2.Name = "UIC2"
+UIC2.CornerRadius = UDim.new(0, 15)
+UIC2.Parent = MainGui
+
+local UIC3 = Instance.new("UICorner")
+UIC3.Name = "UIC3"
+UIC3.CornerRadius = UDim.new(0, 15)
+UIC3.Parent = Auto
+
+local UIC4 = Instance.new("UICorner")
+UIC4.Name = "UIC4"
+UIC4.CornerRadius = UDim.new(0, 15)
+UIC4.Parent = ESP
+
+local UIC5 = Instance.new("UICorner")
+UIC5.Name = "UIC5"
+UIC5.CornerRadius = UDim.new(0, 15)
+UIC5.Parent = Target
+
+local UIC6 = Instance.new("UICorner")
+UIC5.Name = "UIC6"
+UIC5.CornerRadius = UDim.new(0, 15)
+UIC5.Parent = S1
+
+local UIC7 = Instance.new("UICorner")
+UIC5.Name = "UIC7"
+UIC5.CornerRadius = UDim.new(0, 15)
+UIC5.Parent = S4
+
+local UIC8 = Instance.new("UICorner")
+UIC5.Name = "UIC8"
+UIC5.CornerRadius = UDim.new(0, 15)
+UIC5.Parent = Template
+
+game.StarterGui:SetCoreGuiEnabled(Enum.CoreGuiType.PlayerList, false)
+local scroller = PlayerScroller
+
+function updatePlayers()
+
+	for i, child in pairs(scroller:GetChildren()) do
+
+		if child:IsA("Frame") then child:Destroy() end
+	end
+
+	for i, plr in pairs(game.Players:GetPlayers()) do
+
+		local templateClone = Template:Clone()
+		templateClone:WaitForChild("Name").Text = "@" .. plr.Name
+
+		local part = Instance.new("Part")
+		part.Shape = Enum.PartType.Cylinder
+		part.Orientation = Vector3.new(0, -90, 0)
+		part.Size = Vector3.new(1, 1, 1)
+		part.Transparency = 1
+
+
+		local camera = Instance.new("Camera")
+		camera.CFrame = part.CFrame * CFrame.Angles(0, math.rad(90), 0) + Vector3.new(0, 0, 1.25)
+
+		templateClone.Parent = scroller
+		scroller.CanvasSize = UDim2.new(0, 0, 0, scroller.UIListLayout.AbsoluteContentSize.Y)
+
+	end
+end
+
+updatePlayers()
+game.Players.PlayerAdded:Connect(updatePlayers)
+game.Players.PlayerRemoving:Connect(updatePlayers)
